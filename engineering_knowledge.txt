@@ -1,0 +1,124 @@
+
+Dhaka Seismic Zone & Soil Classification: 
+Dhaka Metropolitan Development Plan (DMDP) area covers approximately 1,530 square 
+kilometres and is classified as Seismic Zone II under BNBC 2020. The area sits on the Bengal 
+Basin, one of the world's thickest sedimentary sequences, with Holocene alluvial deposits up to 
+20 metres deep in many low-lying areas. 
+
+Soil types in Dhaka are classified into three categories for the purposes of this system: 
+•     Soft Filled (Holocene alluvial / reclaimed wetland): Districts include Mirpur, Rampura, 
+Bashundhara, Aftabnagar, Badda, Banasree, Keraniganj, Old Dhaka, Demra, Jatrabari. 
+Site amplification factor 3.1–8.5 times rock reference (midpoint 5.5). Liquefaction 
+susceptible. 
+•     Medium (Mixed alluvial / older fill): Districts include Dhanmondi, Mohammadpur, 
+Gulshan, Uttara, Banani, Khilgaon, Lalbagh. Site amplification factor 1.5–3.0 times 
+(midpoint 2.0). Liquefaction susceptible per DMDP-wide analysis. 
+•     Hard (Pleistocene terrace / stiff clay): Districts include Cantonment and northern Uttara 
+plateau. Site amplification factor 1.0–1.5 times (midpoint 1.1). Not liquefaction 
+susceptible. 
+
+Bangladesh National Building Code — Seismic :
+Provisions: 
+The Bangladesh National Building Code (BNBC) has undergone three major iterations with 
+respect to seismic design requirements: 
+•     Pre-1993: No seismic design code existed in Bangladesh. All buildings constructed 
+before 1993 were designed for gravity loads only. These represent the highest 
+code-deficiency risk tier in this system. 
+•     BNBC 1993: First introduction of seismic provisions. Dhaka assigned zone coefficient Z 
+= 0.15g. Limited ductility detailing requirements. Widely disregarded in practice. 
+•     BNBC 2006: Revised provisions with improved zone mapping. Z = 0.15–0.20g for 
+Dhaka area. Better detailing requirements but still frequently violated. 
+•     BNBC 2020 (current): Latest edition incorporating lessons from the 2015 Nepal 
+earthquake. Dhaka assigned Z = 0.20g minimum. Base shear requirement is 27.5% 
+higher than BNBC 2006 for comparable structures. Mandatory seismic detailing. Most 
+existing Dhaka buildings pre-date or under-comply with this standard. 
+
+Soft Story Buildings in Dhaka :
+A soft story (also called weak story) configuration exists when one floor of a multi-story building 
+has significantly less lateral stiffness or strength than adjacent floors. In Dhaka, the 
+overwhelming majority of soft-story buildings have open ground-floor parking (piloti construction) 
+— RC columns with no masonry infill at ground level, while all upper floors have full brick infill 
+walls. 
+
+During an earthquake, the stiff upper stories act as a rigid block that concentrates all lateral 
+deformation into the soft ground floor, causing complete storey collapse. This failure mode killed 
+thousands in the 1999 Kocaeli earthquake (Turkey) and the 2016 Kumamoto earthquake 
+(Japan). 
+
+Research findings on soft story prevalence in Dhaka: 
+•     Soft story construction is the single most important predictor of earthquake vulnerability 
+in Dhaka DNCC, with 40.32% variable importance in decision tree analysis (Ahmed & 
+Morita, 2018). 
+•     Soft story buildings are more common in the DNCC area (North City Corporation — 
+covering Mirpur, Mohammadpur, Uttara). 
+•     The CDMP scenario earthquake (M7.5, Madhupur Fault) estimates 72,316 buildings 
+damaged beyond repair, with soft-story RC buildings disproportionately represented. 
+6.4  Retrofitting Methods for Dhaka Buildings 
+The following retrofitting techniques are validated for Dhaka RC construction. All methods are 
+described in the HBR/CDMP Retrofitting Report and the JICA-PWD Capacity Development 
+Project (2011–2015). 
+
+RC Column Jacketing :
+The most common and accessible retrofit method for Dhaka. The existing column is wrapped 
+with additional longitudinal reinforcement and closely-spaced transverse ties, then encased in 
+new self-compacting concrete. Minimum jacket thickness is 75mm. This method increases 
+column shear strength, flexural strength, and ductility. Typical cost: BDT 80,000–200,000 per 
+column. 
+
+Shear Wall Addition: 
+New reinforced concrete walls are cast within existing open bays at the ground floor. The wall is 
+connected to the existing footing through cored holes with reinforcement bars, and to the floor 
+slab through mechanical or chemical anchors. Shear walls provide the highest lateral stiffness 
+increase of any retrofit method. Typical cost: BDT 300,000–700,000 per bay. 
+
+Steel Moment Frame: 
+A steel rigid frame is installed within open parking bays. Columns are anchored to the 
+slab/footing with chemical anchor bolts. Beam-column connections are rigid (welded or bolted 
+moment joints). This method preserves parking access. All steel must be galvanised and 
+fire-protected. Typical cost: BDT 400,000–900,000 per bay. 
+
+FRP Wrapping: 
+Carbon Fibre Reinforced Polymer (CFRP) or Glass FRP (GFRP) sheets are bonded to columns 
+with structural epoxy. This method significantly improves ductility and confinement but does 
+NOT add meaningful lateral strength. FRP wrapping must be combined with shear walls for 
+complete soft-story correction. It is most suitable as a supplementary measure or for 
+Moderate-tier buildings. Typical cost: BDT 60,000–150,000 per column. 
+
+Full Soft Story Package: 
+For Critical-tier buildings, the recommended approach combines all four methods: RC column 
+jacketing on all ground-floor columns, new shear walls in at least two bays per principal 
+direction, FRP wrapping on remaining columns, and connection strengthening at ground-floor 
+slab-beam joints. Structural engineer inspections are required at each stage. Total cost: 8–15% 
+of building replacement value, or BDT 2,500–5,500 per square foot of ground floor area.
+
+6.5  Frequently Asked Questions 
+Q: What is liquefaction and why is it relevant to Dhaka? 
+Liquefaction occurs when saturated, loose granular soil loses its strength and stiffness during 
+earthquake shaking and behaves like a liquid. Buildings on liquefied soil can tilt, sink, or 
+experience severe foundation damage even if the structure itself is intact. Over 60% of the 
+DMDP area is at moderate to high liquefaction risk under a M7.5 scenario earthquake. In Mirpur 
+alone, 8 out of 13 borehole locations showed liquefiable soil (Islam et al., 2010). 
+
+Q: How does the vulnerability score work? 
+The score is a three-component composite (0–100). Soil type contributes 0–30 points based on 
+site amplification research. Construction year contributes 0–40 points based on BNBC 
+compliance: pre-1993 buildings receive the maximum penalty because they had no seismic 
+design requirement. The soft story flag contributes 0 or 30 points as a binary penalty. The three 
+components sum to a total score, which is mapped to a risk tier: Critical (70+), High (50–69), 
+Moderate (30–49), or Low (under 30).
+
+Q: Which Dhaka districts are at highest risk? 
+The highest-risk districts based on combined soil amplification and liquefaction susceptibility 
+are: Old Dhaka (Puran Dhaka), Aftabnagar, Badda, Rampura, Bashundhara, Banasree, and 
+Mirpur. These areas combine soft filled Holocene soils (amplification up to 8.5 times), high 
+liquefaction susceptibility, and a high concentration of pre-1993 or soft-story buildings. 
+
+Q: Is professional engineering assessment required? 
+Yes. This system provides a screening-level risk assessment based on published academic 
+research. It is not a substitute for a site-specific structural engineering assessment by a licensed 
+engineer. Any building scoring High or Critical should be inspected by a professional structural 
+engineer who can review as-built drawings, conduct material testing, and design a site-specific 
+retrofit scheme.
+
+
+

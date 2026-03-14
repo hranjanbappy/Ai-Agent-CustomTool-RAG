@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhaka Seismic Risk Assessor — Ranjan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0c10;
+  --bg2:#10141c;
+  --bg3:#161b26;
+  --bg4:#1c2230;
+  --border:#ffffff12;
+  --border2:#ffffff20;
+  --text:#e8eaf0;
+  --muted:#7a8499;
+  --accent:#3d8ef0;
+  --accent2:#5ba3f5;
+  --teal:#1db88a;
+  --amber:#e8a020;
+  --red:#e05252;
+  --purple:#8b6ff0;
+  --serif:'DM Serif Display',serif;
+  --sans:'Outfit',sans-serif;
+  --mono:'DM Mono',monospace;
+}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:300;line-height:1.7;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(16px);background:rgba(10,12,16,.85);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;padding:0 2rem;gap:2rem}
+.nav-logo{font-family:var(--serif);font-size:1rem;color:var(--text);opacity:.9;letter-spacing:.02em;white-space:nowrap}
+.nav-links{display:flex;gap:1.5rem;margin-left:auto}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.8rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:var(--accent2)}
+
+/* ── HERO ── */
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 2rem 4rem;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 60% at 50% 50%,black 30%,transparent 100%);pointer-events:none}
+.hero-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(61,142,240,.12) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.track-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem 1rem;border:1px solid var(--border2);border-radius:100px;font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);margin-bottom:1.5rem;background:rgba(61,142,240,.06)}
+.track-badge span{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+h1{font-family:var(--serif);font-size:clamp(2.8rem,7vw,5.5rem);line-height:1.1;letter-spacing:-.01em;margin-bottom:1rem}
+h1 em{font-style:italic;color:var(--accent2)}
+.hero-sub{font-size:1.05rem;color:var(--muted);max-width:560px;margin:0 auto 2.5rem;font-weight:300}
+.hero-meta{font-size:.8rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.hero-pills{display:flex;flex-wrap:wrap;gap:.6rem;justify-content:center;margin-bottom:3rem}
+.pill{padding:.3rem .9rem;border-radius:100px;font-size:.75rem;font-weight:500;border:1px solid}
+.pill-blue{border-color:rgba(61,142,240,.4);color:var(--accent2);background:rgba(61,142,240,.08)}
+.pill-teal{border-color:rgba(29,184,138,.4);color:var(--teal);background:rgba(29,184,138,.08)}
+.pill-amber{border-color:rgba(232,160,32,.4);color:var(--amber);background:rgba(232,160,32,.08)}
+.pill-purple{border-color:rgba(139,111,240,.4);color:var(--purple);background:rgba(139,111,240,.08)}
+.scroll-hint{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.4rem;color:var(--muted);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;animation:bounce 2s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+.scroll-hint svg{opacity:.5}
+
+/* ── SECTIONS ── */
+section{padding:6rem 2rem;max-width:1100px;margin:0 auto}
+.section-label{font-size:.7rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem}
+.section-label::before{content:'';width:24px;height:1px;background:var(--accent)}
+h2{font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.2;margin-bottom:1rem}
+.section-intro{color:var(--muted);font-size:1rem;max-width:680px;margin-bottom:3rem;font-weight:300}
+
+/* ── CARDS ── */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:border-color .2s,transform .2s}
+.card:hover{border-color:var(--border2);transform:translateY(-2px)}
+
+/* ── PRINCIPLE BOX ── */
+.principle{background:linear-gradient(135deg,rgba(61,142,240,.1),rgba(61,142,240,.04));border:1px solid rgba(61,142,240,.25);border-radius:12px;padding:1.5rem 2rem;margin-bottom:3rem;display:flex;gap:1rem;align-items:flex-start}
+.principle-icon{font-size:1.4rem;flex-shrink:0;margin-top:.1rem}
+.principle p{font-size:.95rem;line-height:1.7;color:var(--text)}
+.principle strong{color:var(--accent2)}
+
+/* ── RESEARCH TABLE ── */
+.research-table{width:100%;border-collapse:collapse;margin-bottom:3rem;font-size:.88rem}
+.research-table th{padding:.8rem 1rem;text-align:left;font-size:.7rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border2);background:var(--bg2)}
+.research-table th:first-child{border-radius:8px 0 0 0}
+.research-table th:last-child{border-radius:0 8px 0 0}
+.research-table td{padding:.9rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.6}
+.research-table tr:hover td{background:var(--bg2)}
+.source-tag{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:rgba(61,142,240,.15);border:1px solid rgba(61,142,240,.3);color:var(--accent2);font-family:var(--mono);font-size:.75rem;font-weight:500;flex-shrink:0}
+.author-name{color:var(--text);font-weight:400;margin-bottom:.2rem}
+.author-year{color:var(--muted);font-size:.8rem;font-family:var(--mono)}
+
+/* ── SCORING GRID ── */
+.scoring-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-bottom:3rem}
+.score-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;position:relative;overflow:hidden}
+.score-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.score-card.soil::before{background:linear-gradient(90deg,var(--teal),transparent)}
+.score-card.code::before{background:linear-gradient(90deg,var(--accent),transparent)}
+.score-card.soft::before{background:linear-gradient(90deg,var(--amber),transparent)}
+.score-card.liq::before{background:linear-gradient(90deg,var(--purple),transparent)}
+.score-label{font-size:.7rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem}
+.score-card.soil .score-label{color:var(--teal)}
+.score-card.code .score-label{color:var(--accent2)}
+.score-card.soft .score-label{color:var(--amber)}
+.score-card.liq .score-label{color:var(--purple)}
+.score-rule{font-family:var(--mono);font-size:.78rem;color:var(--muted);line-height:1.8;margin-bottom:.8rem}
+.score-pts{font-family:var(--serif);font-size:1.6rem;color:var(--text)}
+.score-source{font-size:.72rem;color:var(--muted);margin-top:.4rem}
+
+/* ── LOCATIONS ── */
+.district-strip{display:flex;flex-wrap:wrap;gap:.6rem;padding:1.5rem;background:var(--bg2);border:1px solid var(--border);border-radius:12px}
+.district{padding:.4rem 1rem;border-radius:6px;font-size:.82rem;font-weight:500;background:rgba(224,82,82,.1);border:1px solid rgba(224,82,82,.25);color:#f08080}
+
+/* ── WORKFLOW DIAGRAM ── */
+#workflow svg{width:100%;height:auto;display:block}
+.diagram-wrap{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:2rem;overflow:hidden}
+
+/* ── TOOLS GRID ── */
+.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}
+@media(max-width:680px){.tools-grid{grid-template-columns:1fr}}
+.tool-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:1.5rem;position:relative;overflow:hidden}
+.tool-card::after{content:'';position:absolute;inset:0;border-radius:12px;opacity:0;transition:opacity .3s}
+.tool-card:hover::after{opacity:1}
+.tool-card.det{border-color:rgba(29,184,138,.2)}
+.tool-card.det::after{background:radial-gradient(ellipse 80% 80% at 0% 0%,rgba(29,184,138,.05),transparent)}
+.tool-card.rag{border-color:rgba(61,142,240,.2)}
+.tool-card.rag::after{background:radial-gradient(ellipse 80% 80% at 100% 0%,rgba(61,142,240,.05),transparent)}
+.tool-name{font-family:var(--mono);font-size:.82rem;font-weight:500;margin-bottom:.3rem}
+.tool-card.det .tool-name{color:var(--teal)}
+.tool-card.rag .tool-name{color:var(--accent2)}
+.tool-badge{display:inline-block;padding:.15rem .6rem;border-radius:100px;font-size:.68rem;font-weight:500;margin-bottom:.8rem;letter-spacing:.05em}
+.tool-card.det .tool-badge{background:rgba(29,184,138,.15);color:var(--teal);border:1px solid rgba(29,184,138,.3)}
+.tool-card.rag .tool-badge{background:rgba(61,142,240,.15);color:var(--accent2);border:1px solid rgba(61,142,240,.3)}
+.tool-desc{font-size:.88rem;color:var(--muted);line-height:1.65;margin-bottom:1rem}
+.tool-returns{background:var(--bg3);border-radius:8px;padding:.8rem 1rem;font-size:.78rem;font-family:var(--mono);color:var(--muted);line-height:1.7}
+
+/* ── ENDPOINTS TABLE ── */
+.ep-table{width:100%;border-collapse:collapse;font-size:.85rem;margin-bottom:2rem}
+.ep-table th{padding:.7rem 1rem;text-align:left;font-size:.68rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border2);background:var(--bg3)}
+.ep-table td{padding:.85rem 1rem;border-bottom:1px solid var(--border);vertical-align:top}
+.ep-table tr:hover td{background:var(--bg2)}
+.ep-method{font-family:var(--mono);font-size:.78rem;color:var(--teal);font-weight:500}
+.ep-path{font-family:var(--mono);font-size:.82rem;color:var(--text)}
+.ep-params{font-family:var(--mono);font-size:.75rem;color:var(--muted)}
+
+/* ── TECH STACK ── */
+.stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:.8rem;margin-bottom:2rem}
+.stack-item{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;display:flex;flex-direction:column;gap:.3rem}
+.stack-role{font-size:.68rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.stack-tech{font-size:.9rem;font-weight:500;color:var(--text)}
+
+/* ── HALLUCINATION GUARD ── */
+.guard-box{background:linear-gradient(135deg,rgba(232,160,32,.08),rgba(232,160,32,.03));border:1px solid rgba(232,160,32,.25);border-radius:12px;padding:1.5rem 2rem;display:flex;gap:1rem;align-items:flex-start;margin-top:1.5rem}
+.guard-box p{font-size:.9rem;line-height:1.7;color:var(--text)}
+.guard-box code{font-family:var(--mono);font-size:.82rem;color:var(--amber);background:rgba(232,160,32,.1);padding:.1rem .4rem;border-radius:4px}
+
+/* ── DEMO SECTION ── */
+.demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}
+@media(max-width:720px){.demo-grid{grid-template-columns:1fr}}
+.demo-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.demo-header{padding:1rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.6rem}
+.demo-dot{width:8px;height:8px;border-radius:50%}
+.demo-title{font-size:.78rem;font-weight:500;letter-spacing:.04em;color:var(--muted)}
+.demo-body{padding:1.5rem;font-family:var(--mono);font-size:.78rem;line-height:1.8}
+.demo-q{color:var(--muted);margin-bottom:.8rem}
+.demo-q span{color:var(--accent2)}
+.demo-tier{display:inline-block;padding:.2rem .8rem;border-radius:4px;font-weight:500;font-size:.8rem;margin-bottom:.6rem}
+.tier-critical{background:rgba(224,82,82,.15);color:var(--red);border:1px solid rgba(224,82,82,.3)}
+.tier-high{background:rgba(232,160,32,.15);color:var(--amber);border:1px solid rgba(232,160,32,.3)}
+.demo-line{margin:.2rem 0}
+.demo-key{color:var(--muted)}
+.demo-val{color:var(--teal)}
+.demo-val-amber{color:var(--amber)}
+.demo-note{color:var(--muted);font-size:.72rem;margin-top:.8rem;line-height:1.6;font-family:var(--sans)}
+
+
+/* ── FOOTER ── */
+footer{border-top:1px solid var(--border);padding:2.5rem 2rem;text-align:center;color:var(--muted);font-size:.8rem;background:var(--bg2)}
+footer strong{color:var(--text)}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);margin:0 2rem}
+
+/* ── ANIMATIONS ── */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Dhaka Seismic Risk Assessor</div>
+  <div class="nav-links">
+    <a href="#research">Research</a>
+    <a href="#workflow">Workflow</a>
+    <a href="#tools">Tools</a>
+    <a href="#demo">Demo</a>
+
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero" style="max-width:100%;padding-top:80px">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="track-badge"><span></span>Track 2 — Agentic AI Prototype</div>
+  <h1>Dhaka <em>Seismic</em><br>Risk Assessor</h1>
+  <p class="hero-sub">Research Findings and AI Development Summary.<br>BUET/CDMP grounded · LangGraph ReAct Agent · Zero hallucinated numbers.</p>
+  <div class="hero-pills">
+    <span class="pill pill-blue">LangGraph ReAct</span>
+    <span class="pill pill-teal">Gemini 2.5 Flash</span>
+    <span class="pill pill-amber">Deterministic Python</span>
+    <span class="pill pill-purple">Chroma RAG</span>
+    <span class="pill pill-blue">FastAPI</span>
+  </div>
+  <p class="hero-meta">Presented by <strong style="color:var(--text)">Ranjan</strong> &nbsp;·&nbsp; WhatsApp +880 1979189844</p>
+  <div class="scroll-hint">
+    <svg width="16" height="20" viewBox="0 0 16 20" fill="none"><rect x="5.5" y="0.5" width="5" height="9" rx="2.5" stroke="currentColor"/><path d="M8 13v5M5 15l3 3 3-3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    scroll
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- RESEARCH -->
+<section id="research" class="fade-in">
+  <div class="section-label">Section 01</div>
+  <h2>Research Findings</h2>
+  <p class="section-intro">Every constant in the codebase is traceable to one of five peer-reviewed BUET or CDMP publications. No numbers come from the LLM.</p>
+
+  <div class="principle">
+    <div class="principle-icon">🌏</div>
+    <p><strong>Tectonic context:</strong> Bangladesh sits at the triple junction of the Indian, Eurasian, and Burma Sub-Plates. The Madhupur Fault beneath the DMDP area can generate M7.0–8.0 earthquakes. Classified as Seismic Zone II under BNBC 2020, Dhaka's true risk is severely understated due to deep Holocene alluvial deposits.</p>
+  </div>
+
+  <table class="research-table">
+    <thead>
+      <tr>
+        <th>Source</th>
+        <th>Authors</th>
+        <th>Key Finding Used in System</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="source-tag">[1]</span></td>
+        <td><div class="author-name">Ansary & Rahman</div><div class="author-year">2013</div></td>
+        <td>Microtremor at 45 Dhaka sites — amplification 1.3×–8.5×. Soft-filled Holocene soils (Mirpur, Bashundhara) reach 8.5×; Pleistocene terrace (Cantonment) 1.0–1.5×. Vulnerability index Kg: 0.45–31.85.</td>
+      </tr>
+      <tr>
+        <td><span class="source-tag">[2]</span></td>
+        <td><div class="author-name">Ansary et al.</div><div class="author-year">2024</div></td>
+        <td>CPT data from 546 DMDP locations. Under M7.5 / PGA 0.21g scenario: >60% of DMDP area at moderate–high liquefaction vulnerability. Basis for liquefaction flags on soft_filled and medium soil classes.</td>
+      </tr>
+      <tr>
+        <td><span class="source-tag">[3]</span></td>
+        <td><div class="author-name">Khair, Hore & Ansary</div><div class="author-year">2024</div></td>
+        <td>Confirms amplification ranges via modern analysis: nonlinear 3.1–5.5×, equivalent linear 3.8–8.5×, microtremor H/V 1.3–6.6×. Deep Holocene deposits consistently outperform Pleistocene terrace soils.</td>
+      </tr>
+      <tr>
+        <td><span class="source-tag">[4]</span></td>
+        <td><div class="author-name">Ahmed & Morita</div><div class="author-year">2018</div></td>
+        <td>Decision-tree analysis across DNCC/DSCC. Soft story is the #1 vulnerability predictor with 40.32% OOB variable importance. Soft-story buildings concentrated in DNCC (Mirpur, Mohammadpur, Uttara).</td>
+      </tr>
+      <tr>
+        <td><span class="source-tag">[5]</span></td>
+        <td><div class="author-name">CDMP</div><div class="author-year">2009</div></td>
+        <td>M7.5 Madhupur Fault scenario: 72,316 buildings damaged beyond repair, 158,634 moderately damaged (49% of stock), 88,503 deaths at 2 am, economic loss up to USD 69 billion.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-label" style="margin-top:3rem">Evidence-to-Code Mapping</div>
+  <h2 style="font-size:1.8rem;margin-bottom:1.5rem">Scoring Constants</h2>
+
+  <div class="scoring-grid">
+    <div class="score-card soil">
+      <div class="score-label">Soil Amplification</div>
+      <div class="score-rule">soft_filled = 30<br>medium = 18<br>hard = 6<br>amp: 5.5× / 2.0× / 1.1×</div>
+      <div class="score-pts">0–30 pts</div>
+      <div class="score-source">[1] Ansary & Rahman · [3] Khair et al.</div>
+    </div>
+    <div class="score-card code">
+      <div class="score-label">BNBC Code Tier</div>
+      <div class="score-rule">&lt;1993 = 40<br>1993–2006 = 30<br>2007–2020 = 15<br>2021+ = 0</div>
+      <div class="score-pts">0–40 pts</div>
+      <div class="score-source">BNBC 1993, 2020 (+27.5% base shear)</div>
+    </div>
+    <div class="score-card soft">
+      <div class="score-label">Soft Story Flag</div>
+      <div class="score-rule">SOFT_STORY_PENALTY = 30<br>True → +30<br>False → 0</div>
+      <div class="score-pts">0 or 30 pts</div>
+      <div class="score-source">[4] Ahmed & Morita (40.32% OOB)</div>
+    </div>
+    <div class="score-card liq">
+      <div class="score-label">Liquefaction Flag</div>
+      <div class="score-rule">soft_filled = True<br>medium = True<br>hard = False</div>
+      <div class="score-pts">Informational</div>
+      <div class="score-source">[2] Ansary et al. 2024 (>60% DMDP)</div>
+    </div>
+  </div>
+
+  <div class="section-label">Highest-Risk Locations</div>
+  <div class="district-strip">
+    <span class="district">Old Dhaka</span>
+    <span class="district">Mirpur</span>
+    <span class="district">Bashundhara</span>
+    <span class="district">Rampura</span>
+    <span class="district">Badda</span>
+    <span class="district">Aftabnagar</span>
+    <span class="district">Banasree</span>
+  </div>
+  <p style="color:var(--muted);font-size:.85rem;margin-top:.8rem">These locations combine soft filled Holocene soils (amplification up to 8.5×), high liquefaction susceptibility, and high concentrations of pre-1993 and soft-story buildings — the three compounding risk factors captured by the scoring engine.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- WORKFLOW -->
+<section id="workflow" class="fade-in">
+  <div class="section-label">Section 02</div>
+  <h2>Agentic Workflow</h2>
+  <p class="section-intro">A LangGraph ReAct agent drives all query handling — it reasons about intent, selects the right tool, calls it, and formats the result. The LLM never invents numbers.</p>
+
+  <div class="principle">
+    <div class="principle-icon">⚡</div>
+    <p><strong>Core Principle:</strong> The LLM is never trusted with numbers. A <strong>LangGraph ReAct agent</strong> decides which tool to call. All vulnerability scores and cost estimates are produced by deterministic Python functions — every constant traceable to peer-reviewed BUET/CDMP literature. The LLM only formats the final report. <strong>Claude Code, Claude, and Gemini Pro</strong> were used to plan, code, test and fix bugs.</p>
+  </div>
+
+  <div class="diagram-wrap" id="workflow">
+    <svg viewBox="0 0 680 600" width="100%" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#4a90d9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+        <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#1db88a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+        <marker id="arr3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="#8b6ff0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+
+      <!-- User Query -->
+      <rect x="240" y="20" width="200" height="52" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <text x="340" y="43" text-anchor="middle" fill="#e8eaf0" font-family="Outfit,sans-serif" font-size="14" font-weight="500">User query</text>
+      <text x="340" y="62" text-anchor="middle" fill="#7a8499" font-family="DM Mono,monospace" font-size="11">GET /ask?query=…</text>
+
+      <line x1="340" y1="72" x2="340" y2="112" stroke="#4a90d9" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <!-- ReAct Agent -->
+      <rect x="150" y="112" width="380" height="68" rx="12" fill="rgba(139,111,240,0.1)" stroke="rgba(139,111,240,0.35)" stroke-width="1"/>
+      <text x="340" y="137" text-anchor="middle" fill="#b8a8f8" font-family="Outfit,sans-serif" font-size="14" font-weight="500">LangGraph ReAct agent</text>
+      <text x="340" y="158" text-anchor="middle" fill="#7a8499" font-family="DM Mono,monospace" font-size="11">Gemini 2.5 Flash · temp=0 · create_react_agent()</text>
+
+      <!-- fork labels -->
+      <text x="172" y="214" text-anchor="middle" fill="#7a8499" font-family="Outfit,sans-serif" font-size="11">Seismic / retrofit</text>
+      <text x="508" y="214" text-anchor="middle" fill="#7a8499" font-family="Outfit,sans-serif" font-size="11">General / info</text>
+
+      <!-- fork arrows -->
+      <path d="M250 180 L250 232 L140 232 L140 268" fill="none" stroke="#1db88a" stroke-width="1.5" marker-end="url(#arr2)"/>
+      <path d="M430 180 L430 232 L540 232 L540 268" fill="none" stroke="#4a90d9" stroke-width="1.5" marker-end="url(#arr)"/>
+
+      <!-- Tool 1 -->
+      <rect x="30" y="268" width="220" height="76" rx="10" fill="rgba(29,184,138,0.08)" stroke="rgba(29,184,138,0.3)" stroke-width="1"/>
+      <text x="140" y="290" text-anchor="middle" fill="#1db88a" font-family="Outfit,sans-serif" font-size="13" font-weight="500">Seismic + retrofit tool</text>
+      <text x="140" y="308" text-anchor="middle" fill="#7a8499" font-family="DM Mono,monospace" font-size="10">assess_seismic_risk_and</text>
+      <text x="140" y="324" text-anchor="middle" fill="#7a8499" font-family="DM Mono,monospace" font-size="10">_retrofit_tool</text>
+
+      <!-- Tool 2 -->
+      <rect x="430" y="268" width="220" height="76" rx="10" fill="rgba(61,142,240,0.08)" stroke="rgba(61,142,240,0.3)" stroke-width="1"/>
+      <text x="540" y="290" text-anchor="middle" fill="#5ba3f5" font-family="Outfit,sans-serif" font-size="13" font-weight="500">RAG search tool</text>
+      <text x="540" y="308" text-anchor="middle" fill="#7a8499" font-family="DM Mono,monospace" font-size="10">search_database_tool</text>
+      <text x="540" y="324" text-anchor="middle" fill="#7a8499" font-family="DM Mono,monospace" font-size="10">Chroma vector store</text>
+
+      <!-- Python functions -->
+      <line x1="140" y1="344" x2="140" y2="380" stroke="#e8a020" stroke-width="1.5" marker-end="url(#arr)"/>
+      <rect x="30" y="380" width="220" height="84" rx="10" fill="rgba(232,160,32,0.08)" stroke="rgba(232,160,32,0.3)" stroke-width="1"/>
+      <text x="140" y="400" text-anchor="middle" fill="#e8a020" font-family="Outfit,sans-serif" font-size="12" font-weight="500">Deterministic Python</text>
+      <text x="140" y="418" text-anchor="middle" fill="#7a8499" font-family="DM Mono,monospace" font-size="10">calculate_vulnerability_score()</text>
+      <text x="140" y="434" text-anchor="middle" fill="#7a8499" font-family="DM Mono,monospace" font-size="10">estimate_retrofit_cost()</text>
+      <text x="140" y="450" text-anchor="middle" fill="#7a8499" font-family="DM Mono,monospace" font-size="10">All constants from BUET/CDMP</text>
+
+      <!-- Chroma -->
+      <line x1="540" y1="344" x2="540" y2="380" stroke="#4a90d9" stroke-width="1.5" marker-end="url(#arr)"/>
+      <rect x="430" y="380" width="220" height="84" rx="10" fill="rgba(61,142,240,0.08)" stroke="rgba(61,142,240,0.3)" stroke-width="1"/>
+      <text x="540" y="400" text-anchor="middle" fill="#5ba3f5" font-family="Outfit,sans-serif" font-size="12" font-weight="500">Chroma vector store</text>
+      <text x="540" y="418" text-anchor="middle" fill="#7a8499" font-family="DM Mono,monospace" font-size="10">Top-5 similarity chunks</text>
+      <text x="540" y="434" text-anchor="middle" fill="#7a8499" font-family="DM Mono,monospace" font-size="10">HuggingFace MiniLM-L6-v2</text>
+      <text x="540" y="450" text-anchor="middle" fill="#7a8499" font-family="DM Mono,monospace" font-size="10">Returns NO_DOCUMENTS_FOUND</text>
+
+      <!-- merge to LLM -->
+      <path d="M140 464 L140 506 L255 506" fill="none" stroke="#8b6ff0" stroke-width="1.5" marker-end="url(#arr3)"/>
+      <path d="M540 464 L540 506 L425 506" fill="none" stroke="#8b6ff0" stroke-width="1.5" marker-end="url(#arr3)"/>
+
+      <!-- LLM format -->
+      <rect x="160" y="484" width="360" height="56" rx="12" fill="rgba(139,111,240,0.1)" stroke="rgba(139,111,240,0.35)" stroke-width="1"/>
+      <text x="340" y="507" text-anchor="middle" fill="#b8a8f8" font-family="Outfit,sans-serif" font-size="14" font-weight="500">LLM formats reply</text>
+      <text x="340" y="526" text-anchor="middle" fill="#7a8499" font-family="DM Mono,monospace" font-size="11">Never invents numbers · follows _SYSTEM_PROMPT</text>
+
+      <!-- output -->
+      <line x1="340" y1="540" x2="340" y2="572" stroke="#4a90d9" stroke-width="1.5" marker-end="url(#arr)"/>
+      <rect x="245" y="572" width="190" height="34" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+      <text x="340" y="594" text-anchor="middle" fill="#e8eaf0" font-family="DM Mono,monospace" font-size="12" font-weight="500">{ reply, tool_used }</text>
+    </svg>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TOOLS -->
+<section id="tools" class="fade-in">
+  <div class="section-label">Section 03</div>
+  <h2>The Two Tools</h2>
+  <p class="section-intro">Two <code style="font-family:var(--mono);font-size:.9em;color:var(--teal)">@tool</code>-decorated LangChain functions registered with the agent. It can invoke each zero, one, or multiple times per query.</p>
+
+  <div class="tools-grid">
+    <div class="tool-card det">
+      <div class="tool-name">assess_seismic_risk_and_retrofit_tool</div>
+      <span class="tool-badge">deterministic</span>
+      <div class="tool-desc">Called when the user asks about seismic vulnerability, earthquake risk, or retrofit costs/methods for a specific building in Dhaka.</div>
+      <div class="tool-returns">
+        risk_tier · total_score · sub_scores<br>
+        site_amplification_factor<br>
+        liquefaction_susceptible<br>
+        recommended_intervention<br>
+        cost_range_bdt · cost_range_usd<br>
+        scope_summary · citations<br>
+        disclaimer
+      </div>
+    </div>
+    <div class="tool-card rag">
+      <div class="tool-name">search_database_tool</div>
+      <span class="tool-badge">Chroma RAG</span>
+      <div class="tool-desc">Called for general engineering questions, BNBC guidelines, or any informational query about the domain.</div>
+      <div class="tool-returns">
+        Top-5 similarity-matched<br>
+        document chunks from<br>
+        Chroma vector store<br><br>
+        Returns "NO_DOCUMENTS_FOUND"<br>
+        if nothing matches
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:2.5rem">API Endpoints</div>
+  <table class="ep-table">
+    <thead>
+      <tr><th>Method</th><th>Path</th><th>Parameters</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="ep-method">GET</span></td>
+        <td><span class="ep-path">/ask</span></td>
+        <td><span class="ep-params">query (string)</span></td>
+        <td style="font-size:.83rem">LangGraph agent — auto-routes to seismic tool or RAG. Returns <code style="font-family:var(--mono);font-size:.8em;color:var(--teal)">{reply, tool_used}</code>.</td>
+      </tr>
+      <tr>
+        <td><span class="ep-method">GET</span></td>
+        <td><span class="ep-path">/vulnerability</span></td>
+        <td><span class="ep-params">soil_type,<br>construction_year,<br>soft_story</span></td>
+        <td style="font-size:.83rem">Direct call to <code style="font-family:var(--mono);font-size:.8em;color:var(--teal)">calculate_vulnerability_score()</code> — no LLM. Returns full JSON.</td>
+      </tr>
+      <tr>
+        <td><span class="ep-method">GET</span></td>
+        <td><span class="ep-path">/retrofit</span></td>
+        <td><span class="ep-params">intervention_type,<br>sqft</span></td>
+        <td style="font-size:.83rem">Direct call to <code style="font-family:var(--mono);font-size:.8em;color:var(--teal)">estimate_retrofit_cost(full_scope=True)</code> — no LLM.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="section-label" style="margin-top:2.5rem">Technology Stack</div>
+  <div class="stack-grid">
+    <div class="stack-item"><div class="stack-role">Agent Framework</div><div class="stack-tech">LangGraph create_react_agent</div></div>
+    <div class="stack-item"><div class="stack-role">LLM</div><div class="stack-tech">Gemini 2.5 Flash (temp=0)</div></div>
+    <div class="stack-item"><div class="stack-role">Vector DB</div><div class="stack-tech">Chroma (persistent)</div></div>
+    <div class="stack-item"><div class="stack-role">Embeddings</div><div class="stack-tech">HuggingFace MiniLM-L6-v2</div></div>
+    <div class="stack-item"><div class="stack-role">Web Framework</div><div class="stack-tech">FastAPI + Uvicorn</div></div>
+    <div class="stack-item"><div class="stack-role">Engineering Tools</div><div class="stack-tech">Pure Python (deterministic)</div></div>
+  </div>
+
+  <div class="guard-box">
+    <div style="font-size:1.3rem;flex-shrink:0">⚠️</div>
+    <p><strong style="color:var(--amber)">Hallucination Guard:</strong> If <code>search_database_tool</code> returns <code>NO_DOCUMENTS_FOUND</code> or no relevant answer, the system prompt instructs the agent to reply only: <code>"This information is not found in the database."</code> The agent must never use internal LLM training knowledge for domain questions.</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DEMO -->
+<section id="demo" class="fade-in">
+  <div class="section-label">Section 04</div>
+  <h2>Live Demo Examples</h2>
+  <p class="section-intro">Two query types showing exactly how the agent routes and responds. All numbers below come from deterministic Python — not the LLM.</p>
+
+  <div class="demo-grid">
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-dot" style="background:#e05252"></div>
+        <div class="demo-dot" style="background:#e8a020"></div>
+        <div class="demo-dot" style="background:#1db88a"></div>
+        <span class="demo-title" style="margin-left:.5rem">Seismic assessment query → seismic tool</span>
+      </div>
+      <div class="demo-body">
+        <div class="demo-q">GET /ask?query=<span>"Mirpur building, 1992, open ground floor parking"</span></div>
+        <span class="demo-tier tier-critical">⚠ CRITICAL</span>
+        <div class="demo-line"><span class="demo-key">total_score    </span><span class="demo-val">100 / 100</span></div>
+        <div class="demo-line"><span class="demo-key">soil_score     </span><span class="demo-val">30 / 30</span> <span class="demo-key">(soft_filled)</span></div>
+        <div class="demo-line"><span class="demo-key">code_year      </span><span class="demo-val">40 / 40</span> <span class="demo-key">(pre-1993)</span></div>
+        <div class="demo-line"><span class="demo-key">soft_story     </span><span class="demo-val">30 / 30</span></div>
+        <div class="demo-line"><span class="demo-key">amplification  </span><span class="demo-val">5.5×</span></div>
+        <div class="demo-line"><span class="demo-key">liquefaction   </span><span class="demo-val-amber">YES ⚠</span></div>
+        <div class="demo-line"><span class="demo-key">intervention   </span><span class="demo-val">full_soft_story</span></div>
+        <div class="demo-line"><span class="demo-key">cost_bdt       </span><span class="demo-val">৳5M – ৳13.2M</span></div>
+        <div class="demo-line"><span class="demo-key">tool_used      </span><span class="demo-val">seismic_engineering_tools</span></div>
+        <div class="demo-note">Numbers produced by calculate_vulnerability_score() + estimate_retrofit_cost() — LLM bypassed for all values.</div>
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-dot" style="background:#e05252"></div>
+        <div class="demo-dot" style="background:#e8a020"></div>
+        <div class="demo-dot" style="background:#1db88a"></div>
+        <span class="demo-title" style="margin-left:.5rem">General query → RAG search tool</span>
+      </div>
+      <div class="demo-body">
+        <div class="demo-q">GET /ask?query=<span>"What is liquefaction and why does it matter?"</span></div>
+        <span class="demo-tier" style="background:rgba(61,142,240,.12);color:#5ba3f5;border:1px solid rgba(61,142,240,.25)">RAG response</span>
+        <div class="demo-line" style="margin-top:.6rem"><span class="demo-key">tool_used      </span><span class="demo-val">project_calc_tool</span></div>
+        <div class="demo-line"><span class="demo-key">chunks         </span><span class="demo-val">5 retrieved</span></div>
+        <div style="margin-top:.8rem;color:#7a8499;font-family:var(--sans);font-size:.82rem;line-height:1.75">
+          "Liquefaction occurs when saturated, loose granular soil loses its strength during earthquake shaking and behaves like a liquid. Over 60% of the DMDP area is at moderate to high risk under a M7.5 scenario…"
+        </div>
+        <div style="margin-top:.8rem;color:#7a8499;font-family:var(--sans);font-size:.82rem;padding:.6rem .8rem;background:rgba(61,142,240,.06);border-left:2px solid rgba(61,142,240,.3);border-radius:0 6px 6px 0">
+          If nothing is found in vector store → replies:<br>
+          <span style="font-family:var(--mono);color:#5ba3f5;font-size:.78rem">"This information is not found in the database."</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scenario verification table -->
+  <div class="section-label" style="margin-top:2rem">Scenario Verification</div>
+  <table class="research-table" style="margin-bottom:0">
+    <thead>
+      <tr>
+        <th>Scenario</th><th>Soil</th><th>Year</th><th>Soft Story</th><th>Score</th><th>Tier</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Mirpur 1995 + soft story</td><td><span style="color:var(--red);font-size:.8rem">soft_filled</span></td><td>1995</td><td>Yes</td>
+        <td style="font-family:var(--mono);font-size:.85rem">90/100</td>
+        <td><span class="demo-tier tier-critical" style="padding:.15rem .6rem;font-size:.75rem">CRITICAL</span></td>
+      </tr>
+      <tr>
+        <td>Dhanmondi 2010 + soft story</td><td><span style="color:var(--amber);font-size:.8rem">medium</span></td><td>2010</td><td>Yes</td>
+        <td style="font-family:var(--mono);font-size:.85rem">63/100</td>
+        <td><span class="demo-tier tier-high" style="padding:.15rem .6rem;font-size:.75rem">HIGH</span></td>
+      </tr>
+      <tr>
+        <td>Gulshan 2019, no soft story</td><td><span style="color:var(--amber);font-size:.8rem">medium</span></td><td>2019</td><td>No</td>
+        <td style="font-family:var(--mono);font-size:.85rem">33/100</td>
+        <td><span class="demo-tier" style="padding:.15rem .6rem;font-size:.75rem;background:rgba(61,142,240,.12);color:#5ba3f5;border:1px solid rgba(61,142,240,.25)">MODERATE</span></td>
+      </tr>
+      <tr>
+        <td>Cantonment 2022, no soft story</td><td><span style="color:var(--teal);font-size:.8rem">hard</span></td><td>2022</td><td>No</td>
+        <td style="font-family:var(--mono);font-size:.85rem">6/100</td>
+        <td><span class="demo-tier" style="padding:.15rem .6rem;font-size:.75rem;background:rgba(29,184,138,.1);color:var(--teal);border:1px solid rgba(29,184,138,.25)">LOW</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+
+<footer>
+  <p><strong>Dhaka Seismic Risk Assessor</strong> &nbsp;·&nbsp; Research Findings & AI Development Summary</p>
+  <p style="margin-top:.4rem">Presented by <strong>Ranjan</strong> &nbsp;·&nbsp; WhatsApp +880 1979189844</p>
+  <p style="margin-top:.4rem;font-size:.72rem;opacity:.5">Stack: LangGraph · Gemini 2.5 Flash · LangChain · Chroma · FastAPI · Python</p>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
+},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

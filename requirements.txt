@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+python-dotenv
+langchain
+langchain-core
+langchain-community
+langgraph
+langchain-google-genai
+langchain-groq
+langchain-chroma
+chromadb
+langchain-huggingface
+sentence-transformers
+pypdf
+pydantic>=2.0
+typing-extensions
