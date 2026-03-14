@@ -91,11 +91,14 @@ python ingest.py
 ```
 
 This will process the documents and store them in the vector database for retrieval during AI queries.
-Presentation video url: https://youtu.be/iCNbXiDpQdk?si=_ugeGowHPHqXgWj0
+
+Presentation video url: 
+https://youtu.be/iCNbXiDpQdk?si=_ugeGowHPHqXgWj0
 
 Enjoy chating with the Ai.
 
 
 ...................................
 Developer: 
-Hrb Ranjan (Contact : WhatsApp +880 1979189844, E-mail: hranjanbappy@gmail.com)
+Hrb Ranjan 
+(Contact : WhatsApp +880 1979189844, E-mail: hranjanbappy@gmail.com)
